@@ -11,7 +11,6 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'preservim/nerdcommenter'
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
-Plug 'yamatsum/nvim-nonicons'
 call plug#end()
 
 "==================genral-configs==============
