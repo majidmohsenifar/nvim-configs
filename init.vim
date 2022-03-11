@@ -11,6 +11,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'preservim/nerdcommenter'
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
+Plug 'tversteeg/registers.nvim', { 'branch': 'main' }
 call plug#end()
 
 "==================genral-configs==============
@@ -87,6 +88,8 @@ nmap <C-p> :lprevious<CR>
 inoremap <C-space> <C-x><C-o>
 "saving
 nnoremap <C-s> :w<CR>
+
+nnoremap <leader>fs :GoFillStruct<CR>
 
 "======================visuals======================================
 syntax enable

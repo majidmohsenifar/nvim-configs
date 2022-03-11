@@ -1,0 +1,38 @@
+snippet ife "if ... { ... }"
+if err != nil {
+	return err
+}
+endsnippet
+
+snippet as
+assert.Equal(t,${1},${2})
+endsnippet
+
+snippet on
+$1.On("$2",$3).Once().Return($4)
+endsnippet
+
+snippet onr
+$1.On("$2",$3).Once().Return($4).Run(func(args mock.Arguments){
+$5 = args.Get($6).(*$7)
+})
+endsnippet
+
+snippet ser 
+type Service interface{
+
+}
+type service struct{
+
+}
+func New$1()Service{
+return &service{}
+}
+endsnippet
+
+
+snippet fur 
+func($1)$2($3)$4{
+	$5
+}
+endsnippet
