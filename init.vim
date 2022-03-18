@@ -25,6 +25,11 @@ set smartcase
 set encoding=UTF-8
 set maxmempattern=5000
 set nohlsearch
+set foldmethod=syntax
+set foldnestmax=1
+set foldenable
+" to open folds when files get open
+au BufRead * normal zR
 
 "==================ulti-snips-configs==========
 "using tab to go to next placeholder of ultisnips
