@@ -12,6 +12,10 @@ Plug 'preservim/nerdcommenter'
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'tversteeg/registers.nvim', { 'branch': 'main' }
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 call plug#end()
 
 "==================genral-configs==============
@@ -37,6 +41,16 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"                                       
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
+
+"===============lsp-configs=============
+set hidden
+
+let g:LanguageClient_serverCommands = {
+       \ 'go': ['gopls']
+    \ }
+
+autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
+set signcolumn=yes
 
 
 "==================vim-go-configs==============
@@ -90,7 +104,8 @@ nmap <C-n> :lnext<CR>
 nmap <C-p> :lprevious<CR>
 
 "completion with ctrl space
-inoremap <C-space> <C-x><C-o>
+"inoremap <C-space> <C-x><C-o>
+inoremap <C-p> <C-x><C-o>
 "saving
 nnoremap <C-s> :w<CR>
 
@@ -111,4 +126,4 @@ call deoplete#custom#option('omni_patterns', {
 "===================lua plugins=========================
 lua require('plugins.nvim-tree')
 lua require('plugins.nvim-web-devicons')
-lua require'nvim-web-devicons'.get_icons()
+lua require('nvim-web-devicons').get_icons()
