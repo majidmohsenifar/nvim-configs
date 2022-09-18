@@ -48,7 +48,7 @@ vim.g.go_highlight_fields = true
 vim.g.go_highlight_function_calls = true
 vim.g.go_highlight_function_parameters = true
 vim.g.rehash256 = true
-vim.g.molokai_original = false 
+vim.g.molokai_original = true
 vim.g.go_doc_keywordprg_enabled = false
 vim.g.go_fmt_fail_silently = true
 vim.g.go_diagnostics_level = 2
@@ -67,29 +67,32 @@ vim.g.rustfmt_fail_silently = 0
 
 -- key-mapping -----------------------------------------
 nmap('<leader>ff',':Files<CR>')
-nmap("<leader>fg",":Rg<CR>")
-nmap("<leader>fb",":Buffers<CR>")
+nmap('<leader>fg',':Rg<CR>')
+nmap('<leader>fb',':Buffers<CR>')
 
-nmap("<leader>p",":NvimTreeFindFileToggle<CR>")
-nmap("<leader>w","<C-w>w<CR>")
+nmap('<leader>p',':NvimTreeFindFileToggle<CR>')
+nmap('<leader>w','<C-w>w<CR>')
 
 -- "rename variable in module level with all its refrences
-nmap("<leader>r",":GoRename<CR>")
+nmap('<leader>r',':GoRename<CR>')
 
 -- go to next or previous error in errorFix list
-nmap("<C-n>",":cn<CR>")
-nmap("<C-p>",":cp<CR>")
+nmap('<C-n>',':cn<CR>')
+nmap('<C-p>',':cp<CR>')
 -- 
 -- " turn to next or previous errors, after open location list
-nmap("<C-n>",":lnext<CR>")
-nmap("<C-p>",":lprevious<CR>")
+nmap('<C-n>',':lnext<CR>')
+nmap('<C-p>',':lprevious<CR>')
 
 -- "completion with ctrl space
 --imap("<C-space>","<C-x><C-o>")
 --imap("<C-p>","<C-x><C-o>")
-nmap("<leader>fs",":GoFillStruct<CR>")
+nmap('<leader>fs',':GoFillStruct<CR>')
 
-require("mason").setup()
+-- go to definition
+nmap('<c-]>',':lua vim.lsp.buf.definition()<CR>')
+
+require('mason').setup()
 local rt = {
     server = {
         settings = {
