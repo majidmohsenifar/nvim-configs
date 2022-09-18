@@ -16,6 +16,7 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
+Plug 'rust-lang/rust.vim', {'for': 'rust'}
 call plug#end()
 
 "==================genral-configs==============
@@ -23,7 +24,7 @@ let mapleader = ";"
 set updatetime=100
 set splitright
 set splitbelow
-filetype plugin on
+filetype plugin indent on
 set ignorecase
 set smartcase
 set encoding=UTF-8
@@ -46,10 +47,11 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 set hidden
 
 let g:LanguageClient_serverCommands = {
-       \ 'go': ['gopls']
+       \ 'go': ['gopls'],
+       \ 'rust': ['rust-analyzer'],
     \ }
 
-autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
+"autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
 set signcolumn=yes
 
 
@@ -75,6 +77,7 @@ let g:go_list_type = 'locationlist'
 let g:go_metalinter_command='golangci-lint'
 let g:go_metalinter_autosave = 0
 
+let g:go_addtags_transform = 'camelcase'
 "=======================key mapping=================================
 nnoremap <leader>ff :Files<CR>
 nnoremap <leader>fg :Rg<CR>
@@ -82,9 +85,6 @@ nnoremap <leader>fb :Buffers<CR>
 
 nnoremap <leader>p :NvimTreeFindFileToggle<CR>
 nnoremap <leader>w <C-w>w<CR>
-"fold and unflod functions
-map - vafzf  
-map + zo
 
 "rename variable in module level with all its refrences
 nnoremap <leader>r :GoRename<CR>
@@ -106,8 +106,6 @@ nmap <C-p> :lprevious<CR>
 "completion with ctrl space
 "inoremap <C-space> <C-x><C-o>
 inoremap <C-p> <C-x><C-o>
-"saving
-nnoremap <C-s> :w<CR>
 
 nnoremap <leader>fs :GoFillStruct<CR>
 
@@ -117,6 +115,11 @@ set relativenumber
 set number
 colorscheme molokai
 highlight LineNr ctermfg=gray
+
+"=========================rust===============================
+let g:rustfmt_autosave = 1
+let g:rustfmt_emit_files = 1
+let g:rustfmt_fail_silently = 0
 
 "=================functions=======================================
 call deoplete#custom#option('omni_patterns', {

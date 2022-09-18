@@ -41,7 +41,7 @@ require('nvim-tree').setup {
   },
   git = {
     enable = true,
-    ignore = true,
+    ignore = false,
   },
   view = {
     width = 32,
