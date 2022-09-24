@@ -13,7 +13,7 @@ end
 
 -- general configs -----------------------------------------
 vim.g.mapleader = ';'
-vim.opt.updatetime = 100 -- TODO is it correct? I mean the number should be string
+vim.opt.updatetime = 200 -- TODO is it correct? I mean the number should be string
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.ignorecase = true
@@ -21,6 +21,8 @@ vim.opt.smartcase = true
 vim.opt.encoding = 'utf-8'
 vim.opt.maxmempattern = 5000 
 vim.opt.hlsearch = false 
+vim.g.rehash256 = true
+vim.g.molokai_original = true
 vim.opt.foldnestmax = 1
 vim.opt.foldenable = true
 vim.opt.hidden = true
@@ -35,11 +37,10 @@ vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.cmd('highlight LineNr ctermfg=gray')
 vim.cmd('filetype plugin indent on')
 vim.cmd('au BufRead * normal zR')
-vim.cmd('colorscheme molokai') 
 
 
 -- vim-go-configs ----------------------------------------
-vim.opt.completeopt=preview 
+vim.opt.completeopt = {'menuone', 'noselect', 'noinsert'}
 vim.g.go_fmt_command = 'goimports'
 vim.g.go_auto_type_info= true
 vim.g.go_def_mode = 'gopls'
@@ -47,8 +48,6 @@ vim.g.go_highlight_types = true
 vim.g.go_highlight_fields = true
 vim.g.go_highlight_function_calls = true
 vim.g.go_highlight_function_parameters = true
-vim.g.rehash256 = true
-vim.g.molokai_original = true
 vim.g.go_doc_keywordprg_enabled = false
 vim.g.go_fmt_fail_silently = true
 vim.g.go_diagnostics_level = 2
@@ -90,10 +89,29 @@ nmap('<C-p>',':lprevious<CR>')
 nmap('<leader>fs',':GoFillStruct<CR>')
 
 -- go to definition
+-- Code navigation shortcuts
 nmap('<c-]>',':lua vim.lsp.buf.definition()<CR>')
+nmap('K',':lua vim.lsp.buf.hover()<CR>')
+nmap('gD',':lua vim.lsp.buf.implementation()<CR>')
+nmap('<c-k>',':lua vim.lsp.buf.signature_help()<CR>')
+nmap('1gD',':lua vim.lsp.buf.type_definition()<CR>')
+nmap('gr',':lua vim.lsp.buf.references()<CR>')
+nmap('g0',':lua vim.lsp.buf.document_symbol()<CR>')
+nmap('gW',':lua vim.lsp.buf.workspace_symbol()<CR>')
+nmap('ga',':lua vim.lsp.buf.code_action()<CR>')
+
 
 require('mason').setup()
 local rt = {
+	tools = { -- rust-tools options
+        autoSetHints = true,
+	hover_with_actions = true,
+        inlay_hints = {
+            show_parameter_hints = false,
+            parameter_hints_prefix = "",
+            other_hints_prefix = "",
+        },
+    },
     server = {
         settings = {
             on_attach = function(_, bufnr)
@@ -116,7 +134,23 @@ require("mason-lspconfig").setup({
     ensure_installed = { "gopls" }
 })
 
-require('lspconfig').gopls.setup({})
+require('lspconfig').gopls.setup({
+	cmd = {'gopls'},
+  on_attach = on_attach,
+  settings = {
+    gopls = {
+      experimentalPostfixCompletions = true,
+      analyses = {
+	unusedparams = true,
+	shadow = true,
+      },
+      staticcheck = true,
+    },
+  },
+  init_options = {
+    usePlaceholders = true,
+  }
+})
 
 -- LSP Diagnostics Options Setup 
 local sign = function(opts)
@@ -154,11 +188,26 @@ autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
 
 -- Completion Plugin Setup
 local cmp = require'cmp'
+
+  -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline('/', {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = {
+        { name = 'buffer' }
+      }
+})
+cmp.setup.cmdline('?', {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = {
+        { name = 'buffer' }
+      }
+})
+
 cmp.setup({
   -- Enable LSP snippets
   snippet = {
     expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
+	vim.fn["vsnip#anonymous"](args.body)
     end,
   },
   mapping = {
@@ -166,23 +215,23 @@ cmp.setup({
     ['<C-n>'] = cmp.mapping.select_next_item(),
     -- Add tab support
     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-    ['<Tab>'] = cmp.mapping.select_next_item(),
+    --['<Tab>'] = cmp.mapping.select_next_item(),
     ['<C-S-f>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-p>'] = cmp.mapping.complete(),
+    ['<C-space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
-    ['<C-y>'] = cmp.mapping.confirm({
+    ['<Tab>'] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Insert,
       select = true,
     })
   },
   -- Installed sources:
   sources = {
-    { name = 'path' },                              -- file paths
+    --{ name = 'path' },                              -- file paths
     { name = 'nvim_lsp', keyword_length = 3 },      -- from language server
     { name = 'nvim_lsp_signature_help'},            -- display function signatures with current parameter emphasized
     { name = 'nvim_lua', keyword_length = 2},       -- complete neovim's Lua runtime API such vim.lsp.*
-    { name = 'buffer', keyword_length = 2 },        -- source current buffer
+    --{ name = 'buffer', keyword_length = 2 },        -- source current buffer
     { name = 'vsnip', keyword_length = 2 },         -- nvim-cmp source for vim-vsnip 
     { name = 'calc'},                               -- source for math calculation
   },
@@ -205,6 +254,7 @@ cmp.setup({
   },
 })
 
+
 -- Treesitter Plugin Setup 
 require('nvim-treesitter.configs').setup {
   ensure_installed = { "lua", "rust", "toml","go" },
@@ -225,7 +275,10 @@ require('plugins.nvim-tree')
 require('plugins.nvim-web-devicons')
 require('nvim-web-devicons').get_icons()
 
-
+-- I don't know why it is not working when is in other places in this file
+vim.cmd('colorscheme molokai') 
+vim.g.rehash256 = true
+vim.g.molokai_original = true
 return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
   use 'williamboman/mason.nvim'    
@@ -255,3 +308,4 @@ return require('packer').startup(function()
   use 'hrsh7th/cmp-buffer'                            
   use 'hrsh7th/vim-vsnip'
 end)
+
