@@ -130,7 +130,6 @@ nmap('g0',':lua vim.lsp.buf.document_symbol()<CR>')
 nmap('gW',':lua vim.lsp.buf.workspace_symbol()<CR>')
 nmap('ga',':lua vim.lsp.buf.code_action()<CR>')
 
-
 require('mason').setup()
 rt = require('rust-tools')
 rt.setup({
@@ -160,9 +159,12 @@ require("mason-lspconfig").setup({
     ensure_installed = { "gopls" }
 })
 
+local ih = require("inlay-hints")
 require('lspconfig').gopls.setup({
 	cmd = {'gopls'},
-  on_attach = on_attach,
+  on_attach = function(c,b)
+      ih.on_attach(c, b)
+  end,
   settings = {
     gopls = {
       experimentalPostfixCompletions = true,
@@ -171,6 +173,15 @@ require('lspconfig').gopls.setup({
 	shadow = true,
       },
       staticcheck = true,
+      hints = {
+        assignVariableTypes = true,
+        compositeLiteralFields = true,
+        compositeLiteralTypes = true,
+        constantValues = true,
+        functionTypeParameters = true,
+        parameterNames = true,
+        rangeVariableTypes = true,
+      },
     },
   },
   init_options = {
@@ -366,6 +377,14 @@ keywords = {
   },
 })
 
+require("inlay-hints").setup({
+  only_current_line = true,
+
+  eol = {
+    right_align = true,
+  }
+})
+
 return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
   use 'williamboman/mason.nvim'    
@@ -373,6 +392,7 @@ return require('packer').startup(function()
   use 'neovim/nvim-lspconfig'
   use { 'fatih/vim-go', ft = 'go' } 
   use 'simrat39/rust-tools.nvim'
+  use 'simrat39/inlay-hints.nvim'
   use {'fatih/molokai', ft = 'go'} 
   use 'junegunn/fzf'
   use 'junegunn/fzf.vim' 
@@ -394,7 +414,7 @@ return require('packer').startup(function()
   use 'hrsh7th/cmp-path'                              
   use 'hrsh7th/cmp-buffer'                            
   use 'hrsh7th/vim-vsnip'
-  use "rafamadriz/friendly-snippets"
-  use { "folke/todo-comments.nvim", requires = "nvim-lua/plenary.nvim"}
+  use 'rafamadriz/friendly-snippets'
+  use { 'folke/todo-comments.nvim', requires = 'nvim-lua/plenary.nvim'}
 end)
 

@@ -124,6 +124,11 @@ _G.packer_plugins = {
     path = "/home/majid/.local/share/nvim/site/pack/packer/start/fzf.vim",
     url = "https://github.com/junegunn/fzf.vim"
   },
+  ["inlay-hints.nvim"] = {
+    loaded = true,
+    path = "/home/majid/.local/share/nvim/site/pack/packer/start/inlay-hints.nvim",
+    url = "https://github.com/simrat39/inlay-hints.nvim"
+  },
   ["mason-lspconfig.nvim"] = {
     loaded = true,
     path = "/home/majid/.local/share/nvim/site/pack/packer/start/mason-lspconfig.nvim",
@@ -135,8 +140,10 @@ _G.packer_plugins = {
     url = "https://github.com/williamboman/mason.nvim"
   },
   molokai = {
-    loaded = true,
-    path = "/home/majid/.local/share/nvim/site/pack/packer/start/molokai",
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/home/majid/.local/share/nvim/site/pack/packer/opt/molokai",
     url = "https://github.com/fatih/molokai"
   },
   nerdcommenter = {
@@ -185,8 +192,10 @@ _G.packer_plugins = {
     url = "https://github.com/simrat39/rust-tools.nvim"
   },
   ["rust.vim"] = {
-    loaded = true,
-    path = "/home/majid/.local/share/nvim/site/pack/packer/start/rust.vim",
+    loaded = false,
+    needs_bufread = true,
+    only_cond = false,
+    path = "/home/majid/.local/share/nvim/site/pack/packer/opt/rust.vim",
     url = "https://github.com/rust-lang/rust.vim"
   },
   ["splitjoin.vim"] = {
@@ -218,10 +227,14 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
-vim.cmd [[au FileType go ++once lua require("packer.load")({'vim-go'}, { ft = "go" }, _G.packer_plugins)]]
+vim.cmd [[au FileType go ++once lua require("packer.load")({'molokai', 'vim-go'}, { ft = "go" }, _G.packer_plugins)]]
+vim.cmd [[au FileType rust ++once lua require("packer.load")({'rust.vim'}, { ft = "rust" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
+time([[Sourcing ftdetect script at: /home/majid/.local/share/nvim/site/pack/packer/opt/rust.vim/ftdetect/rust.vim]], true)
+vim.cmd [[source /home/majid/.local/share/nvim/site/pack/packer/opt/rust.vim/ftdetect/rust.vim]]
+time([[Sourcing ftdetect script at: /home/majid/.local/share/nvim/site/pack/packer/opt/rust.vim/ftdetect/rust.vim]], false)
 time([[Sourcing ftdetect script at: /home/majid/.local/share/nvim/site/pack/packer/opt/vim-go/ftdetect/gofiletype.vim]], true)
 vim.cmd [[source /home/majid/.local/share/nvim/site/pack/packer/opt/vim-go/ftdetect/gofiletype.vim]]
 time([[Sourcing ftdetect script at: /home/majid/.local/share/nvim/site/pack/packer/opt/vim-go/ftdetect/gofiletype.vim]], false)
