@@ -69,6 +69,7 @@ xmap        S   <Plug>(vsnip-cut-text)
 "let g:vsnip_filetypes.typescriptreact = ['typescript']
 ]]
 
+vim.g.vsnip_snippet_dir= '~/.config/nvim/vsnip'
 -- vim-go-configs ----------------------------------------
 vim.opt.completeopt = {'menuone', 'noselect', 'noinsert'}
 vim.g.go_fmt_command = 'goimports'
@@ -159,12 +160,9 @@ require("mason-lspconfig").setup({
     ensure_installed = { "gopls" }
 })
 
-local ih = require("inlay-hints")
 require('lspconfig').gopls.setup({
 	cmd = {'gopls'},
-  on_attach = function(c,b)
-      ih.on_attach(c, b)
-  end,
+  on_attach = on_attach,
   settings = {
     gopls = {
       experimentalPostfixCompletions = true,
@@ -173,15 +171,6 @@ require('lspconfig').gopls.setup({
 	shadow = true,
       },
       staticcheck = true,
-      hints = {
-        assignVariableTypes = true,
-        compositeLiteralFields = true,
-        compositeLiteralTypes = true,
-        constantValues = true,
-        functionTypeParameters = true,
-        parameterNames = true,
-        rangeVariableTypes = true,
-      },
     },
   },
   init_options = {
@@ -377,13 +366,6 @@ keywords = {
   },
 })
 
-require("inlay-hints").setup({
-  only_current_line = true,
-
-  eol = {
-    right_align = true,
-  }
-})
 
 return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
@@ -414,7 +396,6 @@ return require('packer').startup(function()
   use 'hrsh7th/cmp-path'                              
   use 'hrsh7th/cmp-buffer'                            
   use 'hrsh7th/vim-vsnip'
-  use 'rafamadriz/friendly-snippets'
   use { 'folke/todo-comments.nvim', requires = 'nvim-lua/plenary.nvim'}
 end)
 

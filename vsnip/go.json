@@ -1,0 +1,18 @@
+ {
+	"on statement for mocks" : {
+		"prefix" : "on",
+		"body": "$1.On(\"$2\",$3).\nOnce().\nReturn($4)"
+	},
+	"fmt.Println" : {
+		"prefix" : "fp",
+		"body": "fmt.Println($1)"
+	},
+	"panic" : {
+		"prefix" : "pn",
+		"body": "panic($1)"
+	},
+	"create-service" : {
+		"prefix" : "cs",
+		"body": "type Service interface {\n}\n\ntype service struct{\n}\n\n func New$1Service()Service{\n return &service{}\n}"
+	}
+}
