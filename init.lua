@@ -38,6 +38,12 @@ vim.cmd('filetype plugin indent on')
 vim.cmd('highlight LineNr ctermfg=gray')
 vim.cmd('au BufRead * normal zR')
 
+-- copilot configs -----------------------------------
+vim.g.copilot_no_tab_map = true
+vim.g.copilot_assume_mapped = true
+vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+vim.g.copilot_proxy = '127.0.0.1:8889' 
+
 -- vsnip configs -------------------------------------
 vim.cmd [[
 " NOTE: You can use other key to expand snippet.
@@ -224,13 +230,23 @@ cmp.setup.cmdline({ '/', '?' }, {
 })
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+--cmp.setup.cmdline(':', {
+    --mapping = cmp.mapping.preset.cmdline(),
+    --sources = cmp.config.sources({
+      --{ name = 'path' }
+    --}, {
+      --{ name = 'cmdline' }
+    --})
+--})
 cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-      { name = 'path' }
-    }, {
-      { name = 'cmdline' }
-    })
+  sources = {
+    {
+      name = 'cmdline',
+      option = {
+        ignore_cmds = {}
+      }
+    }
+  } 
 })
 
 cmp.setup({
@@ -397,5 +413,6 @@ return require('packer').startup(function()
   use 'hrsh7th/cmp-buffer'                            
   use 'hrsh7th/vim-vsnip'
   use { 'folke/todo-comments.nvim', requires = 'nvim-lua/plenary.nvim'}
+  use 'github/copilot.vim'
 end)
 
