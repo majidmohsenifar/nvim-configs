@@ -382,6 +382,7 @@ keywords = {
   },
 })
 
+require('gitsigns').setup()
 
 return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
@@ -414,5 +415,6 @@ return require('packer').startup(function()
   use 'hrsh7th/vim-vsnip'
   use { 'folke/todo-comments.nvim', requires = 'nvim-lua/plenary.nvim'}
   use 'github/copilot.vim'
+  use 'lewis6991/gitsigns.nvim'
 end)
 

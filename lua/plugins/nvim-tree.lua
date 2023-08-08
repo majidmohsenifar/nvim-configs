@@ -32,7 +32,7 @@ g.nvim_tree_icons = {
 }
 
 require('nvim-tree').setup {
-  open_on_setup = true,
+  --open_on_setup = true,
   update_cwd = true,
   --auto_close = true,
   filters = {
