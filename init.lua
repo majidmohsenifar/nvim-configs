@@ -300,6 +300,12 @@ cmp.setup({
   },
 })
 
+require("nvim-autopairs").setup()
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+cmp.event:on(
+  'confirm_done',
+  cmp_autopairs.on_confirm_done()
+)
 
 -- Treesitter Plugin Setup 
 require('nvim-treesitter.configs').setup {
@@ -395,8 +401,8 @@ return require('packer').startup(function()
   use {'fatih/molokai', ft = 'go'} 
   use 'junegunn/fzf'
   use 'junegunn/fzf.vim' 
-  use 'jiangmiao/auto-pairs' 
   use 'AndrewRadev/splitjoin.vim' 
+  use 'windwp/nvim-autopairs'
   use 'preservim/nerdcommenter' 
   use 'nvim-treesitter/nvim-treesitter'
   use {'rust-lang/rust.vim', ft = 'rust'}

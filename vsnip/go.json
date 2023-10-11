@@ -14,5 +14,9 @@
 	"create-service" : {
 		"prefix" : "cs",
 		"body": "type Service interface {\n}\n\ntype service struct{\n}\n\n func New$1Service()Service{\n return &service{}\n}"
+	},
+	"reciever-func" : {
+		"prefix" : "fu",
+		"body": "func (s *service)$1($2){\n$3}"
 	}
 }
