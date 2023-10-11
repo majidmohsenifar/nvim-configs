@@ -390,6 +390,26 @@ keywords = {
 
 require('gitsigns').setup()
 
+-- DAP config
+require('dap-go').setup()
+require('dapui').setup()
+local dap, dapui =require("dap"),require("dapui")
+dap.listeners.after.event_initialized["dapui_config"]=function()
+  dapui.open()
+end
+dap.listeners.before.event_terminated["dapui_config"]=function()
+  dapui.close()
+end
+dap.listeners.before.event_exited["dapui_config"]=function()
+  dapui.close()
+end
+require("nvim-dap-virtual-text").setup()
+nmap('<leader>db',":DapToggleBreakpoint<CR>")
+nmap('<leader>dc',":DapContinue<CR>")
+nmap('<leader>do',":DapStepOver<CR>")
+nmap('<leader>di',":DapStepInto<CR>")
+nmap('<leader>du',":DapStepOut<CR>")
+
 return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
   use 'williamboman/mason.nvim'    
@@ -422,5 +442,9 @@ return require('packer').startup(function()
   use { 'folke/todo-comments.nvim', requires = 'nvim-lua/plenary.nvim'}
   use 'github/copilot.vim'
   use 'lewis6991/gitsigns.nvim'
+  use 'mfussenegger/nvim-dap'
+  use 'leoluz/nvim-dap-go'
+  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+  use 'theHamsta/nvim-dap-virtual-text'
 end)
 
