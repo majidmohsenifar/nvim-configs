@@ -13,10 +13,14 @@
 	},
 	"create-service" : {
 		"prefix" : "cs",
-		"body": "type Service interface {\n}\n\ntype service struct{\n}\n\n func New$1Service()Service{\n return &service{}\n}"
+		"body": "type Service struct{\n}\n\n func NewService()*Service{\n return &Service{}\n}"
 	},
 	"reciever-func" : {
 		"prefix" : "fu",
-		"body": "func (s *service)$1($2){\n$3}"
+		"body": "func (s *Service)$1($2){\n$3}"
+	},
+	"if-err-return" : {
+		"prefix" : "ie",
+		"body": "if err != nil {\n return err \n}"
 	}
 }

@@ -124,6 +124,7 @@ nmap('<C-p>',':lprevious<CR>')
 --imap("<C-space>","<C-x><C-o>")
 --imap("<C-p>","<C-x><C-o>")
 nmap('<leader>fs',':GoFillStruct<CR>')
+nmap('gr',':GoReferrers<CR>')
 
 -- go to definition
 -- Code navigation shortcuts
@@ -132,7 +133,7 @@ nmap('K',':lua vim.lsp.buf.hover()<CR>')
 nmap('gD',':lua vim.lsp.buf.implementation()<CR>')
 nmap('<c-k>',':lua vim.lsp.buf.signature_help()<CR>')
 nmap('1gD',':lua vim.lsp.buf.type_definition()<CR>')
-nmap('gr',':lua vim.lsp.buf.references()<CR>')
+--nmap('gr',':lua vim.lsp.buf.references()<CR>')
 nmap('g0',':lua vim.lsp.buf.document_symbol()<CR>')
 nmap('gW',':lua vim.lsp.buf.workspace_symbol()<CR>')
 nmap('ga',':lua vim.lsp.buf.code_action()<CR>')
@@ -327,6 +328,8 @@ require('plugins.nvim-tree')
 require('plugins.nvim-web-devicons')
 require('nvim-web-devicons').get_icons()
 
+local nvim_tree = require('plugins.nvim-tree')
+
 -- I don't know why it is not working when is in other places in this file
 vim.cmd('colorscheme molokai') 
 vim.g.rehash256 = true
@@ -394,21 +397,29 @@ require('gitsigns').setup()
 require('dap-go').setup()
 require('dapui').setup()
 local dap, dapui =require("dap"),require("dapui")
-dap.listeners.after.event_initialized["dapui_config"]=function()
-  dapui.open()
-end
-dap.listeners.before.event_terminated["dapui_config"]=function()
-  dapui.close()
-end
-dap.listeners.before.event_exited["dapui_config"]=function()
-  dapui.close()
-end
+--dap.listeners.after.event_initialized["dapui_config"]=function()
+  --vim.cmd('NvimTreeClose')
+  --dapui.open()
+--end
+--dap.listeners.before.event_terminated["dapui_config"]=function()
+  --dapui.close()
+--end
+--dap.listeners.before.event_exited["dapui_config"]=function()
+  --dapui.close()
+--end
 require("nvim-dap-virtual-text").setup()
-nmap('<leader>db',":DapToggleBreakpoint<CR>")
-nmap('<leader>dc',":DapContinue<CR>")
-nmap('<leader>do',":DapStepOver<CR>")
-nmap('<leader>di',":DapStepInto<CR>")
-nmap('<leader>du',":DapStepOut<CR>")
+nmap('sb',":DapToggleBreakpoint<CR>")
+nmap('<space>c',":DapContinue<CR>")
+nmap('<space>i',":DapStepInto<CR>")
+nmap('<space>',":DapStepOver<CR>")
+nmap('<space>o',":DapStepOut<CR>")
+nmap('st',":lua require('dap-go').debug_test()<CR>")
+--nmap('se',":lua require('dapui').close()<CR>")
+
+
+require('lualine').setup({
+	options = { theme = 'base16' }
+})
 
 return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
@@ -446,5 +457,9 @@ return require('packer').startup(function()
   use 'leoluz/nvim-dap-go'
   use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
   use 'theHamsta/nvim-dap-virtual-text'
+  use {
+  'nvim-lualine/lualine.nvim',
+  requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+}
 end)
 
