@@ -49,8 +49,8 @@ local function save_profiles(threshold)
 end
 
 time([[Luarocks path setup]], true)
-local package_path_str = "/home/majid/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?.lua;/home/majid/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?/init.lua;/home/majid/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?.lua;/home/majid/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/home/majid/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/lua/5.1/?.so"
+local package_path_str = "/home/majid/.cache/nvim/packer_hererocks/2.1.1696795921/share/lua/5.1/?.lua;/home/majid/.cache/nvim/packer_hererocks/2.1.1696795921/share/lua/5.1/?/init.lua;/home/majid/.cache/nvim/packer_hererocks/2.1.1696795921/lib/luarocks/rocks-5.1/?.lua;/home/majid/.cache/nvim/packer_hererocks/2.1.1696795921/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/home/majid/.cache/nvim/packer_hererocks/2.1.1696795921/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -74,16 +74,6 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
-  LuaSnip = {
-    loaded = true,
-    path = "/home/majid/.local/share/nvim/site/pack/packer/start/LuaSnip",
-    url = "https://github.com/L3MON4D3/LuaSnip"
-  },
-  ["auto-pairs"] = {
-    loaded = true,
-    path = "/home/majid/.local/share/nvim/site/pack/packer/start/auto-pairs",
-    url = "https://github.com/jiangmiao/auto-pairs"
-  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "/home/majid/.local/share/nvim/site/pack/packer/start/cmp-buffer",
@@ -114,11 +104,6 @@ _G.packer_plugins = {
     path = "/home/majid/.local/share/nvim/site/pack/packer/start/cmp-vsnip",
     url = "https://github.com/hrsh7th/cmp-vsnip"
   },
-  cmp_luasnip = {
-    loaded = true,
-    path = "/home/majid/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
-    url = "https://github.com/saadparwaiz1/cmp_luasnip"
-  },
   ["copilot.vim"] = {
     loaded = true,
     path = "/home/majid/.local/share/nvim/site/pack/packer/start/copilot.vim",
@@ -144,6 +129,11 @@ _G.packer_plugins = {
     path = "/home/majid/.local/share/nvim/site/pack/packer/start/inlay-hints.nvim",
     url = "https://github.com/simrat39/inlay-hints.nvim"
   },
+  ["lualine.nvim"] = {
+    loaded = true,
+    path = "/home/majid/.local/share/nvim/site/pack/packer/start/lualine.nvim",
+    url = "https://github.com/nvim-lualine/lualine.nvim"
+  },
   ["mason-lspconfig.nvim"] = {
     loaded = true,
     path = "/home/majid/.local/share/nvim/site/pack/packer/start/mason-lspconfig.nvim",
@@ -166,10 +156,35 @@ _G.packer_plugins = {
     path = "/home/majid/.local/share/nvim/site/pack/packer/start/nerdcommenter",
     url = "https://github.com/preservim/nerdcommenter"
   },
+  ["nvim-autopairs"] = {
+    loaded = true,
+    path = "/home/majid/.local/share/nvim/site/pack/packer/start/nvim-autopairs",
+    url = "https://github.com/windwp/nvim-autopairs"
+  },
   ["nvim-cmp"] = {
     loaded = true,
     path = "/home/majid/.local/share/nvim/site/pack/packer/start/nvim-cmp",
     url = "https://github.com/hrsh7th/nvim-cmp"
+  },
+  ["nvim-dap"] = {
+    loaded = true,
+    path = "/home/majid/.local/share/nvim/site/pack/packer/start/nvim-dap",
+    url = "https://github.com/mfussenegger/nvim-dap"
+  },
+  ["nvim-dap-go"] = {
+    loaded = true,
+    path = "/home/majid/.local/share/nvim/site/pack/packer/start/nvim-dap-go",
+    url = "https://github.com/leoluz/nvim-dap-go"
+  },
+  ["nvim-dap-ui"] = {
+    loaded = true,
+    path = "/home/majid/.local/share/nvim/site/pack/packer/start/nvim-dap-ui",
+    url = "https://github.com/rcarriga/nvim-dap-ui"
+  },
+  ["nvim-dap-virtual-text"] = {
+    loaded = true,
+    path = "/home/majid/.local/share/nvim/site/pack/packer/start/nvim-dap-virtual-text",
+    url = "https://github.com/theHamsta/nvim-dap-virtual-text"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
@@ -190,6 +205,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/majid/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/kyazdani42/nvim-web-devicons"
+  },
+  ["oil.nvim"] = {
+    loaded = true,
+    path = "/home/majid/.local/share/nvim/site/pack/packer/start/oil.nvim",
+    url = "https://github.com/stevearc/oil.nvim"
   },
   ["packer.nvim"] = {
     loaded = true,
@@ -213,6 +233,11 @@ _G.packer_plugins = {
     path = "/home/majid/.local/share/nvim/site/pack/packer/opt/rust.vim",
     url = "https://github.com/rust-lang/rust.vim"
   },
+  ["splitjoin.nvim"] = {
+    loaded = true,
+    path = "/home/majid/.local/share/nvim/site/pack/packer/start/splitjoin.nvim",
+    url = "https://github.com/bennypowers/splitjoin.nvim"
+  },
   ["splitjoin.vim"] = {
     loaded = true,
     path = "/home/majid/.local/share/nvim/site/pack/packer/start/splitjoin.vim",
@@ -229,6 +254,11 @@ _G.packer_plugins = {
     only_cond = false,
     path = "/home/majid/.local/share/nvim/site/pack/packer/opt/vim-go",
     url = "https://github.com/fatih/vim-go"
+  },
+  ["vim-vsnip"] = {
+    loaded = true,
+    path = "/home/majid/.local/share/nvim/site/pack/packer/start/vim-vsnip",
+    url = "https://github.com/hrsh7th/vim-vsnip"
   }
 }
 
@@ -237,8 +267,8 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
-vim.cmd [[au FileType rust ++once lua require("packer.load")({'rust.vim'}, { ft = "rust" }, _G.packer_plugins)]]
 vim.cmd [[au FileType go ++once lua require("packer.load")({'vim-go', 'molokai'}, { ft = "go" }, _G.packer_plugins)]]
+vim.cmd [[au FileType rust ++once lua require("packer.load")({'rust.vim'}, { ft = "rust" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]

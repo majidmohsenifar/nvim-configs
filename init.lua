@@ -13,7 +13,7 @@ end
 
 -- general configs -----------------------------------------
 vim.g.mapleader = ';'
-vim.opt.updatetime = 200 -- TODO is it correct? I mean the number should be string
+vim.opt.updatetime = 200 
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.ignorecase = true
@@ -103,10 +103,12 @@ vim.g.rustfmt_fail_silently = 0
 
 -- key-mapping -----------------------------------------
 nmap('<leader>ff',':Files<CR>')
-nmap('<leader>fg',':Rg<CR>')
+nmap('<leader>fg',':Rg <C-R><C-W><CR>')
+nmap('<leader>rg',':Rg<CR>')
 nmap('<leader>fb',':Buffers<CR>')
+nmap('<leader>fl',':Lines <C-R><C-W><CR>')
 
-nmap('<leader>p',':NvimTreeFindFileToggle<CR>')
+--nmap('<leader>p',':NvimTreeFindFileToggle<CR>')
 nmap('<leader>w','<C-w>w<CR>')
 
 -- "rename variable in module level with all its refrences
@@ -128,15 +130,23 @@ nmap('gr',':GoReferrers<CR>')
 
 -- go to definition
 -- Code navigation shortcuts
-nmap('<c-]>',':lua vim.lsp.buf.definition()<CR>')
+nmap('<C-]>',':lua vim.lsp.buf.definition()<CR>')
 nmap('K',':lua vim.lsp.buf.hover()<CR>')
 nmap('gD',':lua vim.lsp.buf.implementation()<CR>')
-nmap('<c-k>',':lua vim.lsp.buf.signature_help()<CR>')
+nmap('<C-k>',':lua vim.lsp.buf.signature_help()<CR>')
 nmap('1gD',':lua vim.lsp.buf.type_definition()<CR>')
 --nmap('gr',':lua vim.lsp.buf.references()<CR>')
 nmap('g0',':lua vim.lsp.buf.document_symbol()<CR>')
 nmap('gW',':lua vim.lsp.buf.workspace_symbol()<CR>')
 nmap('ga',':lua vim.lsp.buf.code_action()<CR>')
+
+
+-- temp  key map
+nmap('<C-d>','<C-d>zz')
+nmap('<C-u>','<C-u>zz')
+nmap('<S-h>','<S-h>zz')
+nmap('<S-l>','<S-l>zz')
+
 
 require('mason').setup()
 rt = require('rust-tools')
@@ -257,6 +267,7 @@ cmp.setup({
 	vim.fn["vsnip#anonymous"](args.body)
     end,
   },
+  --view = 'native',
   mapping = {
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-n>'] = cmp.mapping.select_next_item(),
@@ -324,11 +335,9 @@ require('nvim-treesitter.configs').setup {
   }
 }
 
-require('plugins.nvim-tree')
 require('plugins.nvim-web-devicons')
 require('nvim-web-devicons').get_icons()
 
-local nvim_tree = require('plugins.nvim-tree')
 
 -- I don't know why it is not working when is in other places in this file
 vim.cmd('colorscheme molokai') 
@@ -421,6 +430,30 @@ require('lualine').setup({
 	options = { theme = 'base16' }
 })
 
+
+require("oil").setup({
+    keymaps ={
+    	['<S-h>'] = "actions.toggle_hidden",
+	['-'] = "actions.parent",
+            --["_"] = "actions.open_cwd",
+	["<CR>"] = "actions.select",
+	["_"] = "actions.close",
+    },
+    use_default_keymaps = false,
+    view_options = {
+    -- Show files and directories that start with "."
+    show_hidden = false,
+  },
+})
+nmap('-',":Oil<CR>")
+
+
+require('treesj').setup({
+	  use_default_keymaps = false,
+})
+nmap('gj',":TSJToggle<CR>")
+
+
 return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
   use 'williamboman/mason.nvim'    
@@ -432,13 +465,11 @@ return require('packer').startup(function()
   use {'fatih/molokai', ft = 'go'} 
   use 'junegunn/fzf'
   use 'junegunn/fzf.vim' 
-  use 'AndrewRadev/splitjoin.vim' 
   use 'windwp/nvim-autopairs'
   use 'preservim/nerdcommenter' 
   use 'nvim-treesitter/nvim-treesitter'
   use {'rust-lang/rust.vim', ft = 'rust'}
   use 'kyazdani42/nvim-web-devicons' 
-  use 'kyazdani42/nvim-tree.lua'
 -- Completion framework:
   use 'hrsh7th/nvim-cmp' 
 -- LSP completion source:
@@ -460,6 +491,8 @@ return require('packer').startup(function()
   use {
   'nvim-lualine/lualine.nvim',
   requires = { 'nvim-tree/nvim-web-devicons', opt = true }
-}
+  }
+  use 'stevearc/oil.nvim'
+  use{'Wansmer/treesj', requires = { 'nvim-treesitter/nvim-treesitter' } }
 end)
 
