@@ -1,0 +1,21 @@
+require('dap-go').setup()
+require('dapui').setup()
+local dap, dapui =require("dap"),require("dapui")
+--dap.listeners.after.event_initialized["dapui_config"]=function()
+  --vim.cmd('NvimTreeClose')
+  --dapui.open()
+--end
+--dap.listeners.before.event_terminated["dapui_config"]=function()
+  --dapui.close()
+--end
+--dap.listeners.before.event_exited["dapui_config"]=function()
+  --dapui.close()
+--end
+require("nvim-dap-virtual-text").setup()
+nmap('sb',":DapToggleBreakpoint<CR>")
+nmap('<space>c',":DapContinue<CR>")
+nmap('<space>i',":DapStepInto<CR>")
+nmap('<space>',":DapStepOver<CR>")
+nmap('<space>o',":DapStepOut<CR>")
+nmap('st',":lua require('dap-go').debug_test()<CR>")
+--nmap('se',":lua require('dapui').close()<CR>")
