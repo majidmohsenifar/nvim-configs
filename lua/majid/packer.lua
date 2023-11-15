@@ -18,8 +18,11 @@ return require('packer').startup(function()
   use 'neovim/nvim-lspconfig'
 
   -- Go
-  use { 'fatih/vim-go', ft = 'go' } 
+  --use { 'fatih/vim-go', ft = 'go' } 
   use {'fatih/molokai', ft = 'go'} 
+
+  use 'ray-x/go.nvim'
+
 
   -- Rust
   use 'simrat39/rust-tools.nvim'
@@ -38,6 +41,7 @@ return require('packer').startup(function()
 
   -- treesitter
   use 'nvim-treesitter/nvim-treesitter'
+  use 'nvim-treesitter/nvim-treesitter-textobjects'
   use 'kyazdani42/nvim-web-devicons' 
   
 -- Completion framework:
@@ -75,7 +79,7 @@ return require('packer').startup(function()
   use 'stevearc/oil.nvim'
 
   -- splitting/joining blocks of code 
-  use{'Wansmer/treesj', requires = { 'nvim-treesitter/nvim-treesitter' } }
+  use{'Wansmer/treesj'}
 
   if packer_bootstrap then
         require('packer').sync()
